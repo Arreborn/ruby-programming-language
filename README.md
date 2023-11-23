@@ -1,4 +1,6 @@
 # SproutScript
+A full specification for SproutScript can be found in docs/SproutScript - specifikation.pdf (Swedish only).
+
 This document specifies the file(s) relevant for specific data structures in SproutScript. Please consider the current folder as root for these paths. These are listed in alphabetical order.
 
 ## cases/cases.rb 
