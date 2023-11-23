@@ -1,0 +1,54 @@
+- Block med måsvingar - avslutas inte med måsvingar?
+- Rader avslutas med semikolon
+- Funktioner (definieras med function)
+- Explicit return-definition
+- Funktioner - referenser eller kopior?
+- Loopar (for, for each, while)
+- Kolla hur komplext det blir med rekursion
+- Break av loopar
+- Klasser (stor bokstav på klassnamn)
+- Metoder (definieras i klasser med method for att tydliggöra skillnaden från en funktion)
+- Aritmetik (* / + - %)
+- Jämförelseoperatorer ( ==/is | !=/is not | less than < | greater than > | or | and | not )
+- Styrstrukturer (if, if else, else)
+- Testfunktioner (t.ex. assert_equal som kan kallas compare, körs inline)
+- Basfunktioner (print, whatis(type),
+- Hur kör man programmet? CLI eller endast kompilator? Interaktivt läge?
+- Läsa in input från användare (fundera på om endast siffror ska konverteras till ints)
+- Hittar vi fler typer av funktioner, fundera på hur dessa kan förenklas
+- Typkonvertering (sätt något efter variabeln eller något sånt för att typkonvertera?)
+
+_________________
+
+- Datatyper
+
+- Inga globala variabler
+
+- string
+  - contains, split, length, indexering
+
+- bool
+
+- int
+
+- float (ska skillnaden mellan ints och floats tydliggöras? eller ska det vara implicit?)
+
+- Listor (kan ta vilken datatyp som helst)
+  - clear, length, contains,
+
+- Fundera på dict / hash eller andra key -> value saker
+
+_________________
+
+Huvudtanke:
+Förenkla sättet att skriva kod till dess att det kan bli nästan pseudokod-liknande.
+Ge snälla felmeddelanden med tips där det är möjligt. Gärna förslag på vad som kan ha gått fel.
+
+
+_________________
+
+Att tänka på:
+
+- Konsekvent syntax
+- Vi siktar på robust felhantering
+- Objekt är sista prio

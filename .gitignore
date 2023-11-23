@@ -1,0 +1,6 @@
+devnotes.txt
+elliot-dev.txt
+tmp/
+.rubocop.yml
+.rubocop_todo.yml
+Gemfile*

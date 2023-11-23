@@ -1,0 +1,172 @@
+======= SPRÅKSPECIFIKATION =======
+SproutScript - ellhe126, lovar063
+==================================
+
+I kursen TDP019 så har vår grupp som ambition att skapa ett nybörjarspråk - det vill säga ett någolunda enkelt och "snällt" programmeringsspråk. Språkets Unique Selling Point är att det har tagit de snällare delarna från språk såsom Ruby och Python, kombinerat med den goda praxis som en programmerare lär sig i språk såsom C++ eller Java. Mer detaljer om det senare.
+
+==================================
+Idé
+==================================
+
+Huvudtanken med språket är att ge en god medelväg, där en ny programmerare får den snälla delen av Python som är enkelt att använda, medan man lär sig god programmeringspraxis för att gå vidare till språk med syntax likt C, C++ eller Java. Vi har upplevt att vissa funktioner eller metoder i en del programmeringsspråk är döpta på ett sätt som inte direkt motsvarar deras funktionalitet, vilket vi ämnar att åtgärda. Tanken är att det ska vara mer likt att skriva pseudokod i viss mån, där varje händelse eller operation tydligt kan beskriva vad som sker i ett vakuum.
+
+Tanken med detta språk är att det ska vara ett snällt insteg till programmering. Användaren kommer inte att kunna skriva stora, komplicerade program - utan tanken är att detta språk ska användas för att köra enklare, terminalbaserade program för att lära sig principerna med programmering. Språket kommer att ha tydliga begränsningar, och när användarens lärande når den punkt att begränsningarna blir ett hinder är detta ett gott tecken på att de bör gå vidare och lära sig ett annat programmeringsspråk.
+
+==================================
+Features
+==================================
+
+De grundläggande features som vi önskar att språket innehåller, helt utan inbördes ordning, är:
+- Variabler utan hård typning (implicit typning likt Python / Ruby).
+- Planerade datatyper:
+  - Int, Float, String, Bool, List (array-liknande struktur), eventuellt en dict / hash.
+  - Dessa datatyper kommer även att ha ett antal stödfunktioner, t.ex. length, contains o. dyl.
+- Alla grundläggande aritmetiska operatorer (+ - / * % //)
+- Jämförelseoperatorer med möjlighet att uttrycka dessa i ord (likt Python) eller med symboler.
+  - Ex. ( == / is | != / is not | less than / < | greater than / > | or / || | and / && | not / ! )
+- Enklare styrstrukturer (if, else if, else - vi kommer inte att inkludera en switch i detta skede).
+- Grundläggande loopar (for, for each, while) med möjlighet att breaka en loop.
+- Funktioner (huruvida funktionernas parametrar är referenser eller kopior är ännu inte beslutat).
+- I mån av tid kommer även klasser med tillhörande medlemsfunktioner att inkluderas. Detta är däremot låg prioritet.
+
+Planerad basfunktionalitet:
+- Detta avser grundläggande funktioner som vi önskar implementera i språket. Exempel:
+  - whatis(type) - kontrollerar vilken typ (eller klass) en given variabel har.
+  - print(var) - Talar för sig själv, kommer att innehålla metoder för formattering.
+  - Testfunktionalitet ska vara inbyggt i språket - en funktionalitet likt Catch eller test:unit ska finnas inbyggt för enkla tester.
+  - Ambitionen är att rekursion ska finnas och fungera som önskat.
+  - Enradskommentarer definieras med // - likt C eller C++. Block-kommentarer definieras med /* kommentar */.
+
+Extra features:
+- Något vi är intresserade av att bygga är snälla felmeddelanden. Tanken är att en användare ska få god information om vad som gått fel, som uttrycks på ett enkelt sätt att förstå utan krångliga, fackliga uttryck som kan ställa till med besvär.
+- Vi önskar även att felmeddelanden ska ge förslag på vart något gått fel, så att användaren kan åtgärda specifika rader.
+- I den mån det är möjligt ska felmeddelanden inte stoppa körningen, utan skriva ut felmeddelanden eller varningar i terminalen efter eller under pågående körning.
+
+==================================
+Grammatik
+==================================
+--- Syntax
+- Varje rad ska, likt C-liknande språk, avslutas med semikolon.
+- Block kommer, likt C-liknande språk, att avgränsas med måsvingar.
+  - Påverkar styrstrykturer, loopar, funktioner, klasser.
+
+--- Variabler
+- Språket ska ha dynamisk typning. Möjligheten att explicit konvertera en datatyp till en annan läämplig datatyp ska finnas. (Tänk string -> int eller vice versa)
+
+--- Scope, funktioner, klasser, metoder
+
+-- Scope
+- Allting i programkoden utöver funktioner och klasser kommer att ha samma scope, vilket blir vårt globala scope.
+- I en styrstruktur eller loop i det globala scopet ska man kunna komma åt och manipulera variabler i det globala scopet.
+- Variabler som skapas i en loop ska endast leva inuti loopen. En for-loop är det bästa exemplet, där styrvariabeln (ofta i) endast ska existera och lagras under tiden som loopen körs.
+- Funktioner och klasser kommer att ha ett eget scope, och ska inte kunna komma åt variabler som inte skickats med som parameter till funktionen eller metoden.
+
+-- Funktioner
+- Anrop av inbyggd funktionalitet och definitioner ska så nära som möjligt motsvara deras faktiska resultat.
+  - Ex. funktioner defineras som "function Funktionsnamn", metoder i klasser som "method Metodnamn", m.fl.
+- Explicit return från funktioner och/eller metoder. Huruvida en funktion / metod alltid ska ha ett returvärde är ännu inte beslutad, men det ska alltid finnas en return.
+- När komplex data skickas in till en funktion eller metod ska datatypen skickas in som en kopia. Eftersom det alltid måste finnas ett returvärde så ska kopian i så fall returneras till den ursprungliga variabeln om denna behöver uppdateras.
+- Funktioner kommer att anropas med funktionens namn, sedan alltid följt av parenteser.
+
+-- Klasser och metoder
+- Metoder för objekt eller datatyper kommer att anropas med en punkt efter en variabel för ett klassobjekt, sedan följt av metodens namn. Detta följs alltid av parenteser, oavsett om metoden har parametrar eller inte.
+- Som default ska alla klassvariabler vara private. För att komma åt eller manipulera en medlemsvariabel får man skriva en explicit getter eller setter.
+  - Alternativt kan detta vara en grundfunktionalitet för ett klassobjekt, alltså att metoderna get() och set() kan hämta eller sätta alla datamedlemmar som en grundfunktionalitet för varje objekt. Detta behöver diskuteras vidare.
+- Arv är utanför scopet för detta språks komplexitet, och kommer därför att utelämnas. En användare som nått punkten då de vill använda arv bör ha tillräcklig kunskap för att arbeta med ett annat språk.
+
+==================================
+Körning
+==================================
+
+- Vi planerar för att ha ett interpreterat språk, snarare än ett kompilerat. Vi önskar att kunna ge god felhantering under ett programs körning, och för att åstadkomma detta känns det rimligast att använda en interpretator snarare än en kompilator.
+- Tanken är att alla program som skrivs i detta språk är knutna till en fil. På så vis kommer vi inte att ha strikta krav på en main-funktion, utan allting inom filen kommer att tolkas som inom en main-funktion.
+
+==================================
+Kodexempel
+==================================
+
+function math(x, y){
+    if x greater than y{
+        return (x * y);
+    } else {
+      return (y / x);
+    }
+}
+
+print("Hello world!");
+
+a = 10;
+b = "Hello";
+
+whatis(a); // => skriver ut Integer
+whatis(b); // => skriver ut String
+
+function change(string){
+    string = "Hej!";
+    print(string);
+}
+
+change(b);  // => Skriver ut "Hej!"
+print(b);   // => Skriver ut "Hello" då en kopia skickas till funktionen
+
+print(math(a, 5)); // => skriver ut 15
+
+list = [1, 2, 3, 4, "five", 6, true];
+
+print(list.length()); // => skriver ut 7
+
+foreach (item in list){
+    print(item);
+}
+
+for (i to 20, 1){ // variabelnamn, hur långt man ska köra, steglängd
+    x = 0;
+    while (x less than 10){
+          print(x);
+          x += 1;
+    }
+}
+
+c = 10;
+
+if c is not 11 {
+   print("Success!");
+} else {
+   c = true;
+}
+
+if c {
+   print("It's true!");
+}
+
+==================================
+BNF
+==================================
+Vår BNF kommer att behöva kraftigt utvecklas, då det i detta skede är svårt att skapa en övergripande bild. Fler detaljer behöver hamras ut innan en fuillständig BNF kan sammanställas. Exemplet nedan är en enormt simpel vy över hur vår BNF kommer att matcha sig fram. Mycket av detta kommer onekligen att behöva justeras. Medan vi ska bygga upp vår BNF från botten upp så har vi här valt att börja med någonting mycket längre upp i kedjan - ett funktionsanrop.
+
+Varje uttryck kommer att terminera i antingen en variabel, en funktion, en klass, en klassmetod eller en datatyp. Detta innebär att den grundläggande strukturen rimligen bör vara någonting i stil med detta för ett funktionsanrop:
+
+<function> ::= "function" <var> "(" <parameter> ")" "{" <statement> <return> "}"
+
+<statement> ::= <expr> <end>
+
+<expr> ::= <expr> "+" <expr> | <expr> "+" <term> | <term> + <term> | <var> + <expr> | <var> | <term>
+
+<parameter> ::= <var> | <term> | E
+// => Ska kunna innehålla godtyckligt antal, se detta som ett exempel
+
+<return> ::= "return" <var> <end>
+// => Return ska returnera någon form av data - inte nödvändigtvis en variabel
+
+<term> ::= [0-9] | <var>
+
+<var> ::= [a-z] "=" <expr> | [a-z]
+// => Ska kunna ha siffror och andra tecken också, se detta som ett exempel
+
+<end> ::= ";"
+
+x = 2;
+function calc(x){
+    y = x + 2;
+    return y;
+}
